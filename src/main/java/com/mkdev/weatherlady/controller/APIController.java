@@ -29,7 +29,7 @@ public class APIController {
 
 
     @GetMapping(
-            value = "/weather/",
+            value = "/weather",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<WeatherDTO> getWeather(
