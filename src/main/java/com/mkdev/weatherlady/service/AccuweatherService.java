@@ -1,18 +1,23 @@
 package com.mkdev.weatherlady.service;
 
+import com.mkdev.weatherlady.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import java.util.List;
 
 import com.mkdev.weatherlady.dto.AccuweatherCitySearchResponse;
 import com.mkdev.weatherlady.dto.AccuweatherForecastDTO;
 import com.mkdev.weatherlady.dto.WeatherDTO;
 
-public class AccuweatherService implements WeatherService{
+@Service
+public class AccuweatherService implements WeatherService {
 
     private final RestTemplate restTemplate;
 
@@ -28,10 +33,19 @@ public class AccuweatherService implements WeatherService{
     public AccuweatherService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
+
+
+    public WeatherDTO getForecastForCity(String city) {
+        String keyByCity = this.findKeyByCity(city);
+
+        return this.downloadWeather(keyByCity);
+    }
+
+
     @Override
-    public WeatherDTO downloadWeather() {
-        ResponseEntity<AccuweatherForecastDTO> entity =this.restTemplate.getForEntity(
-                "url",
+    public WeatherDTO downloadWeather(String key) {
+        ResponseEntity<AccuweatherForecastDTO> entity = this.restTemplate.getForEntity(
+                forecastUrl,
                 AccuweatherForecastDTO.class
         );
 
@@ -39,6 +53,7 @@ public class AccuweatherService implements WeatherService{
 
         return new WeatherDTO();
     }
+
 
     public String findKeyByCity(String city) {
         String uriString = UriComponentsBuilder.fromHttpUrl(this.searchCityUrl)
@@ -50,14 +65,17 @@ public class AccuweatherService implements WeatherService{
                 uriString,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<>() {}
+                new ParameterizedTypeReference<>() {
+                }
         );
 
-        var cities = response.getBody()
+        var cities = response.getBody();
 
         if (cities.isEmpty()) {
-            throw new NotFoundException;
+            throw new NotFoundException();
         }
-        this.restTemplate.getForEntity()
+
+        AccuweatherCitySearchResponse accuweatherCitySearchResponse = cities.get(0);
+        return accuweatherCitySearchResponse.getKey();
     }
 }
