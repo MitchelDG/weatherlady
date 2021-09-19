@@ -1,1 +1,15 @@
 
+
+
+app:
+  service:
+    accuweather:
+      searchCityUrl: https://accuweather.com/blabla
+      forecastUrl: https://accuweather.com/blabla
+      apiKey: ${ACCUWEATHER_API_KEY}
+
+    weatherStack:
+      apiKey: ${WEATHER_STACK_API_KEY}
+
+    openWeatherMap:
+      apiKey: ${OPEN_WEATHER_MAP_API_KEY}
