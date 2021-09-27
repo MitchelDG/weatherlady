@@ -4,8 +4,8 @@
 app:
   service:
     accuweather:
-      searchCityUrl: https://accuweather.com/blabla
-      forecastUrl: https://accuweather.com/blabla
+      searchCityUrl: http://dataservice.accuweather.com/locations/v1/search
+      forecastUrl: http://dataservice.accuweather.com/forecasts/v1/daily/1day/{locationKey}
       apiKey: ${ACCUWEATHER_API_KEY}
 
     weatherStack:

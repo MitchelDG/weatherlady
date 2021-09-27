@@ -1,23 +1,22 @@
 package com.mkdev.weatherlady.dto;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WeatherDTO {
+public class Pressure {
 
+    @JsonProperty("Metric")
+    private Values metric;
 
-    @JsonProperty("Temperature")
-    private Temperature temperature;
+    @JsonProperty("Imperial")
+    private Values imperial;
 
-    @JsonProperty("Wind")
-    private Wind wind;
-
-    @JsonProperty("Pressure")
-    private Pressure pressure;
 }
-
