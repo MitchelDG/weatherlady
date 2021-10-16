@@ -1,25 +1,46 @@
 package com.mkdev.weatherlady.service;
 
-
-import com.mkdev.weatherlady.dto.WeatherDTO;
-
-import java.util.Arrays;
+import com.mkdev.weatherlady.dto.*;
 
 public class AverageCalculator {
 
-    public WeatherDTO calculateAverage(WeatherDTO... conditions) {
+    public CurrentDTO calculateAverage(CurrentDTO... conditions) {
 
-        Integer averageValue = 0;
+        Float totalTemperature = 0F;
+        Float totalPressure = 0F;
+        Float totalWind = 0F;
 
-        for(WeatherDTO condition : conditions) {
-            averageValue += condition.getValue();
+        for (CurrentDTO condition : conditions) {
+            totalTemperature += condition.getTemperature().getMetric().getValue();
+            totalPressure += condition.getPressure().getMetric().getValue();
+            totalWind += condition.getWind().getSpeed().getMetric().getValue();
         }
 
-        WeatherDTO average = new WeatherDTO();
-        average.setValue(averageValue/conditions.length);
 
+        CurrentDTO average = new CurrentDTO();
+
+        average.builder()
+                .pressure(Pressure.builder()
+                        .metric(Values.builder()
+                                .value(totalPressure / conditions.length)
+                                .unit("mb")
+                                .build())
+                        .build())
+                .temperature(Temperature.builder()
+                        .metric(Values.builder()
+                                .value(totalTemperature / conditions.length)
+                                .unit("°C")
+                                .build())
+                        .build())
+                .wind(Wind.builder()
+                        .speed(Speed.builder()
+                                .metric(Values.builder()
+                                        .value(totalWind / conditions.length)
+                                        .unit("m/s")
+                                        .build())
+                                .build())
+                        .build());
         return average;
     }
-
 
 }

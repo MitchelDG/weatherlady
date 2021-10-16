@@ -14,4 +14,7 @@ public class AccuweatherCitySearchResponse {
 
     @JsonProperty("LocalizedName")
     private String localizedName;
+
+    @JsonProperty("Country")
+    private Country country;
 }

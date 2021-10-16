@@ -1,8 +1,10 @@
 package com.mkdev.weatherlady.service;
 
+import com.mkdev.weatherlady.dto.AccuweatherCitySearchResponse;
+import com.mkdev.weatherlady.dto.AccuweatherForecastDTO;
+import com.mkdev.weatherlady.dto.CurrentDTO;
 import com.mkdev.weatherlady.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -12,16 +14,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
-import com.mkdev.weatherlady.dto.AccuweatherCitySearchResponse;
-import com.mkdev.weatherlady.dto.AccuweatherForecastDTO;
-import com.mkdev.weatherlady.dto.WeatherDTO;
-
 @Service
 public class AccuweatherService implements WeatherService {
 
     private final RestTemplate restTemplate;
 
-    @Value("${app.service.accuweather.url}")
+    @Value("${app.service.accuweather.forecastUrl}")
     private String forecastUrl;
 
     @Value("${app.service.accuweather.searchCityUrl")
@@ -35,7 +33,7 @@ public class AccuweatherService implements WeatherService {
     }
 
 
-    public WeatherDTO getForecastForCity(String city) {
+    public CurrentDTO getForecastForCity(String city) {
         String keyByCity = this.findKeyByCity(city);
 
         return this.downloadWeather(keyByCity);
@@ -43,7 +41,7 @@ public class AccuweatherService implements WeatherService {
 
 
     @Override
-    public WeatherDTO downloadWeather(String key) {
+    public CurrentDTO downloadWeather(String key) {
         ResponseEntity<AccuweatherForecastDTO> entity = this.restTemplate.getForEntity(
                 forecastUrl,
                 AccuweatherForecastDTO.class
@@ -51,7 +49,7 @@ public class AccuweatherService implements WeatherService {
 
         AccuweatherForecastDTO body = entity.getBody();
 
-        return new WeatherDTO();
+        return new CurrentDTO();
     }
 
 
@@ -72,7 +70,7 @@ public class AccuweatherService implements WeatherService {
         var cities = response.getBody();
 
         if (cities.isEmpty()) {
-            throw new NotFoundException();
+            throw new NotFoundException("");
         }
 
         AccuweatherCitySearchResponse accuweatherCitySearchResponse = cities.get(0);

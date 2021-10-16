@@ -1,6 +1,6 @@
 package com.mkdev.weatherlady.controller;
 
-import com.mkdev.weatherlady.dto.WeatherDTO;
+import com.mkdev.weatherlady.dto.CurrentDTO;
 import com.mkdev.weatherlady.service.AccuweatherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class APIController {
 
     private final AccuweatherService accuweatherService;
+
 
     public APIController(AccuweatherService accuweatherService) {
         this.accuweatherService = accuweatherService;
@@ -34,27 +35,29 @@ public class APIController {
             value = "/weather",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<WeatherDTO> getWeather(
+    public ResponseEntity<CurrentDTO> getWeather(
 
             @RequestParam String type,
             @RequestParam String city
     ) {
 
-                WeatherDTO weatherDTO = accuweatherService.getForecastForCity(city);
+                CurrentDTO currentDTO = accuweatherService.getForecastForCity(city);
 
-        return ResponseEntity.ok(weatherDTO);
+        return ResponseEntity.ok(currentDTO);
     }
 
     @GetMapping(
             value = "/openweather",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<WeatherDTO> getOpenWeather(@RequestParam String city) {
+    public ResponseEntity<CurrentDTO> getOpenWeather(
+            @RequestParam String city
+    ) {
 
 
         // should point to corresponding method from openWeatherService
-        WeatherDTO weatherDTO = accuweatherService.getForecastForCity(city);
-        return ResponseEntity.ok(weatherDTO);
+        CurrentDTO currentDTO = accuweatherService.getForecastForCity(city);
+        return ResponseEntity.ok(currentDTO);
     }
 
 }

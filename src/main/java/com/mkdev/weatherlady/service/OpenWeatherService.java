@@ -1,11 +1,11 @@
 package com.mkdev.weatherlady.service;
 
-import com.mkdev.weatherlady.dto.WeatherDTO;
+import com.mkdev.weatherlady.dto.CurrentDTO;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OpenWeatherService {
-    public WeatherDTO getForecastForCity(String city) {
+    public CurrentDTO getForecastForCity(String city) {
     return null;
     }
 }

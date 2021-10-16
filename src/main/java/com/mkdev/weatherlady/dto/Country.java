@@ -8,16 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WeatherDTO {
+public class Country {
 
+    @JsonProperty("ID")
+    private String id;
 
-    @JsonProperty("Temperature")
-    private Temperature temperature;
-
-    @JsonProperty("Wind")
-    private Wind wind;
-
-    @JsonProperty("Pressure")
-    private Pressure pressure;
 }
-

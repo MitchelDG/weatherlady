@@ -4,7 +4,7 @@
 app:
   service:
     accuweather:
-      searchCityUrl: http://dataservice.accuweather.com/locations/v1/search
+      searchCityUrl: http://dataservice.accuweather.com/locations/v1/cities/search
       forecastUrl: http://dataservice.accuweather.com/forecasts/v1/daily/1day/{locationKey}
       apiKey: ${ACCUWEATHER_API_KEY}
 
@@ -12,4 +12,5 @@ app:
       apiKey: ${WEATHER_STACK_API_KEY}
 
     openWeatherMap:
+
       apiKey: ${OPEN_WEATHER_MAP_API_KEY}

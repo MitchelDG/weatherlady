@@ -1,15 +1,32 @@
 package com.mkdev.weatherlady.exception;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.time.Instant;
 
 @RestControllerAdvice
-public class GlobalErrorHandler {
+public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    public String handleNotFoundException(final NotFoundException notFoundException) {
-            return notFoundException.getMessage();
+    public ResponseEntity<Object> handleNotFoundException(final NotFoundException notFoundException, WebRequest request) {
+            return handleExceptionInternal(
+                    notFoundException,
+                    new ErrorResponseDTO(
+                            HttpStatus.NOT_FOUND.value(),
+                            notFoundException.getMessage(),
+                            Instant.now().toString()
+                    ),
+                    new HttpHeaders(),
+                    HttpStatus.NOT_FOUND,
+                    request
+                    );
+
     }
 
 }

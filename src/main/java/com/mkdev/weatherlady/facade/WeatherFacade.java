@@ -1,6 +1,6 @@
 package com.mkdev.weatherlady.facade;
 
-import com.mkdev.weatherlady.dto.WeatherDTO;
+import com.mkdev.weatherlady.dto.CurrentDTO;
 import com.mkdev.weatherlady.service.AccuweatherService;
 import com.mkdev.weatherlady.service.OpenWeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class WeatherFacade {
         this.openWeatherService = openWeatherService;
     }
 
-    public WeatherDTO getWeather(String type, String city) throws BadAttributeValueExpException {
+    public CurrentDTO getWeather(String type, String city) throws BadAttributeValueExpException {
         if (type.equals(ACCUWEATHER)) {
             return accuweatherService.getForecastForCity(city);
         }
@@ -35,10 +35,10 @@ public class WeatherFacade {
         throw new BadAttributeValueExpException("BLAhLBAh");
     }
 
-    public WeatherDTO getAverageCurrentCondition(String city) {
+    public CurrentDTO getAverageCurrentCondition(String city) {
         //TODO: implement future / multithread
-        WeatherDTO accuweatherCondition = accuweatherService.getForecastForCity(city);
-        WeatherDTO openWeatherCondition = openWeatherService.getForecastForCity(city);
+        CurrentDTO accuweatherCondition = accuweatherService.getForecastForCity(city);
+        CurrentDTO openWeatherCondition = openWeatherService.getForecastForCity(city);
 
 
 

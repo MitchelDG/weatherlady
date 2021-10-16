@@ -2,12 +2,20 @@ package com.mkdev.weatherlady.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Temperature {
 
     @JsonProperty("Metric")
-    private TemperatureValues metric;
+    private Values metric;
 
     @JsonProperty("Imperial")
-    private TemperatureValues imperial;
+    private Values imperial;
 }

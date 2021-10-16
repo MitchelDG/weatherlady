@@ -1,7 +1,7 @@
 package com.mkdev.weatherlady.service;
 
-import com.mkdev.weatherlady.dto.WeatherDTO;
+import com.mkdev.weatherlady.dto.CurrentDTO;
 
 public interface WeatherService {
-    public WeatherDTO downloadWeather(String key);
+    public CurrentDTO downloadWeather(String key);
 }
